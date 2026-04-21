@@ -1,39 +1,53 @@
 const BROKER_URL = "wss://edbcd9b6dd544a09baf53908d733c3bd.s1.eu.hivemq.cloud:8884/mqtt";
-const USERNAME = "IotAdmin";
-const PASSWORD = "IotAdmin@123#";
 
-const client = mqtt.connect(BROKER_URL, {
-  username: USERNAME,
-  password: PASSWORD
-});
-
+let client;
 let currentRequestId = null;
 
-client.on("connect", () => {
-  document.getElementById("connStatus").innerText = "Connected";
-  document.getElementById("connStatus").className = "status online";
+function connectMQTT() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-  client.subscribe("robot/fire_request");
-  client.subscribe("robot/status");
-});
+  client = mqtt.connect(BROKER_URL, {
+    username: username,
+    password: password
+  });
 
-client.on("message", (topic, message) => {
-  const data = JSON.parse(message.toString());
+  client.on("connect", () => {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("mainUI").style.display = "block";
 
-  log(topic + " -> " + message.toString());
+    document.getElementById("connStatus").innerText = "Connected";
+    document.getElementById("connStatus").className = "status online";
 
-  if (topic === "robot/status") {
-    document.getElementById("robotStatus").innerText = data.status;
-  }
+    client.subscribe("robot/fire_request");
+    client.subscribe("robot/status");
 
-  if (topic === "robot/fire_request") {
-    currentRequestId = data.request_id;
+    log("Connected to MQTT");
+  });
 
-    document.getElementById("requestText").innerText =
-      "Request ID: " + data.request_id +
-      " | Distance: " + data.distance_cm;
-  }
-});
+  client.on("error", (err) => {
+    alert("Connection failed");
+    console.log(err);
+  });
+
+  client.on("message", (topic, message) => {
+    const data = JSON.parse(message.toString());
+
+    log(topic + " -> " + message.toString());
+
+    if (topic === "robot/status") {
+      document.getElementById("robotStatus").innerText = data.status;
+    }
+
+    if (topic === "robot/fire_request") {
+      currentRequestId = data.request_id;
+
+      document.getElementById("requestText").innerText =
+        "Request ID: " + data.request_id +
+        " | Distance: " + data.distance_cm;
+    }
+  });
+}
 
 function sendApproval(value) {
   if (currentRequestId === null) return;
@@ -43,7 +57,7 @@ function sendApproval(value) {
     approved: value
   }));
 
-  log("Sent approval: " + value);
+  log("Approval sent: " + value);
 }
 
 function log(msg) {

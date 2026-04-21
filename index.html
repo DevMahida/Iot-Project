@@ -1,41 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8" />
-  <title>EV3 Control Panel</title>
-  <link rel="stylesheet" href="style.css">
+    <title>EV3 Control Panel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="card">
-    <h1>EV3 Control Panel</h1>
+    <div class="card" id="loginBox">
+        <h2>Login</h2>
+        <input id="username" placeholder="Username"><br><br>
+        <input id="password" type="password" placeholder="Password"><br><br>
+        <button onclick="connectMQTT()">Connect</button>
+    </div>
 
-    <p>
-      Connection:
-      <span id="connStatus" class="status offline">Disconnected</span>
-    </p>
+    <div id="mainUI" style="display:none;">
 
-    <p>
-      Robot Status:
-      <span id="robotStatus" class="status offline">offline</span>
-    </p>
-  </div>
+        <div class="card">
+            <h1>EV3 Control Panel</h1>
 
-  <div class="card">
-    <h3>Fire Request</h3>
-    <p id="requestText">No request yet</p>
+            <p>
+                Connection:
+                <span id="connStatus" class="status offline">Disconnected</span>
+            </p>
 
-    <button class="yes" onclick="sendApproval(true)">YES</button>
-    <button class="no" onclick="sendApproval(false)">NO</button>
-  </div>
+            <p>
+                Robot Status:
+                <span id="robotStatus" class="status offline">offline</span>
+            </p>
+        </div>
 
-  <div class="card">
-    <h3>Logs</h3>
-    <pre id="log"></pre>
-  </div>
+        <div class="card">
+            <h3>Fire Request</h3>
+            <p id="requestText">No request yet</p>
 
-  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-  <script src="script.js"></script>
+            <button class="yes" onclick="sendApproval(true)">YES</button>
+            <button class="no" onclick="sendApproval(false)">NO</button>
+        </div>
+
+        <div class="card">
+            <h3>Logs</h3>
+            <pre id="log"></pre>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>

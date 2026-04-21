@@ -26,6 +26,11 @@ body {
   color: white;
 }
 
+input {
+  padding: 8px;
+  width: 200px;
+}
+
 button {
   padding: 10px 15px;
   margin-right: 10px;
