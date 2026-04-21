@@ -1,0 +1,51 @@
+body {
+  font-family: Arial;
+  background: #f4f6f9;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.online {
+  background: green;
+  color: white;
+}
+
+.offline {
+  background: red;
+  color: white;
+}
+
+button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.yes {
+  background: green;
+  color: white;
+}
+
+.no {
+  background: red;
+  color: white;
+}
+
+pre {
+  background: black;
+  color: lime;
+  padding: 10px;
+}
